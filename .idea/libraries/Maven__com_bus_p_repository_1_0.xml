@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.bus:p-repository:1.0">
+    <CLASSES />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/p-repository/p-repository-1.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/p-sdr/p-repository/p-repository-1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/p-repository/p-repository-1.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/p-sdr/p-repository/p-repository-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

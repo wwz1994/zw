@@ -1,0 +1,9 @@
+com\bus\vo\Menu.class
+com\bus\vo\User.class
+com\bus\vo\Product.class
+com\bus\vo\Role.class
+com\bus\vo\UserRole.class
+com\bus\vo\ShowModel.class
+com\bus\vo\ProductSku.class
+com\bus\vo\UserRecord.class
+com\bus\vo\OrderEntity.class

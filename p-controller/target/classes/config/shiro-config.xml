@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!--
+       <context:property-placeholder location="classpath*:common.properties" file-encoding="utf-8" ignore-unresolvable="false"/>
+-->
+
+    <!--手机权限认证bean-->
+    <bean id="mobileFormAuthenticationFilter" class="com.bus.filter.CustomAccessControlFilter">
+        <!-- 手机登录的url -->
+        <property name="webLoginUrl" value="/web-v/login" />
+    </bean>
+       <bean id="shiroRealm" class="com.bus.control.shiro.ShiroRealm"/>
+
+       <bean id="shiroFilter" class="com.bus.control.shiro.ShiroFilterFactoryBean_">
+           <property name="open" value="true"/><!--是否开启权限验证-->
+              <property name="securityManager" ref="securityManager"/>
+              <property name="loginUrl" value="${login_url}" >
+
+              </property>
+              <property name="successUrl" value=""/>
+           <property name="unauthorizedUrl" value="${unauthorizedUrl}"/>
+              <property name="filters">
+                     <map>
+                            <entry key="logout">
+                                   <bean class="com.bus.filter.SystemLogoutFilter">
+                                       <property name="url" value="${login_url}"/>
+                                   </bean>
+                            </entry>
+                         <entry key="web_logout">
+                                   <bean class="com.bus.filter.SystemLogoutFilter">
+                                       <property name="url" value="${login_web_url}"/>
+                                   </bean>
+                            </entry>
+                         <entry key="user,authc" >
+                             <bean class="com.bus.filter.ShiroAccessImpl">
+                             </bean>
+                         </entry>
+                         <entry key="web_authc" value-ref="mobileFormAuthenticationFilter" />
+                     </map>
+
+              </property>
+              <property name="filterChainDefinitions" >
+                     <value>
+                            /api/logout = logout
+                            /web-v/logout = web_logout
+                            /api/user/login=anon
+                            /api/qqAuth=anon
+                            /api/user/webLogin=anon
+                            /api/user/qqLogin=anon
+                            /api/user/validLogin=anon
+                            /api/qqLogin=anon
+                            /api/qqLoginReturnUri=anon
+                            /api/index =authc
+                            /web-v/index =web_authc
+                            /web-v/login =anon
+                            /web-v/**=web_authc
+                            /api/login=anon
+                            /static/** = anon
+                     </value>
+              </property>
+
+       </bean>
+
+
+        <!--shiro安全管理器-->
+       <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+          <property name="realm" ref="shiroRealm"/>
+         <property name="sessionManager" ref="sessionManager"/>
+       </bean>
+    <!--session ID 生成器-->
+    <bean id="sessionIdGenerator"
+          class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+
+    <bean class="org.apache.shiro.web.servlet.SimpleCookie" id="simpleCookie">
+        <constructor-arg value="SHIROJSESSEION"/>
+        <property name="httpOnly"  value="true"/>
+    </bean>
+   <bean class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler" id="sessionValidationScheduler">
+       <property name="sessionManager" ref="sessionManager"/>
+           </bean>
+        <!--shiro session-->
+       <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+           <property name="sessionIdCookie" ref="simpleCookie"></property>
+           <property name="sessionIdCookieEnabled" value="true"/>
+        <!--   <property name="cacheManager" ref=""></property>-->
+           <property name="sessionDAO" >
+               <bean class="com.bus.control.shiro.session.RedisSessionDAO">
+                   <property name="timeout" value="3600000"></property>
+                   <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+               </bean>
+           </property>
+           <property name="deleteInvalidSessions" value="true"/>
+           <property name="sessionValidationInterval" value="1800000"/>
+           <property name="sessionValidationScheduler" ref="sessionValidationScheduler">
+           </property>
+           <property name="sessionValidationSchedulerEnabled" value="true"/>
+           <property name="sessionIdUrlRewritingEnabled" value="false" />
+
+       </bean>
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 开启shiro注解支持 -->
+    <bean
+            class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+
+</beans>

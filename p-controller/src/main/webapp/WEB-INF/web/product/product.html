@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" charset="utf-8"  content="text/html; charset=utf-8" />
+    <title>商品</title>
+    <!-- <script  src="../../boostrap/js/jquery-2.1.4.min.js"></script>-->
+    <style>
+
+        #ztree{
+            width: 63.5%;
+            margin-left: 16px;
+            border: 1px #cccccc solid;
+            /* width: auto; */
+            border-radius: 6px;
+        }.form-control {
+             display: inline;
+             width: 80%;}
+
+    </style>
+    <script src="/static/common/plugin/jquery.validate.min.js"></script>
+    <!--  <script src="modules/role/role.js"></script>-->
+</head>
+<body>
+<!--table begin-->
+<div class="container-fluid">
+    <div class="bg-border mt15">
+        <div class="lina-table-head">
+            <form class="form-inline form-wxh form-col-2 mt10"
+                  id="performance_list_form">
+                <div class="form-group w40">
+                    <label>商品名称：</label>
+                    <input type="text" id="" name="skuName" onblur="javascript:if(this.value){this.value = this.value.trim()}" class="form-control w50" value="">
+                    <b id="query"
+                       class="btn btn-primary ml10"><span
+                            class="glyphicon glyphicon-search"></span>&nbsp;查询</b>
+                </div>
+                <div class="form-group w30">
+                    <b id="add"
+                       class="btn btn-primary ml10">添加</b>
+                </div>
+
+            </form>
+        </div>
+        <table class="table table-striped table-hover"
+               id="performance_list_table"></table>
+    </div>
+</div>
+
+<script>
+    seajs.use(['modules/product/product'],function(app){
+        app.initList();
+        app.initAdd();
+       // app.initEvent();
+    })
+</script>
+</body>
+</html>

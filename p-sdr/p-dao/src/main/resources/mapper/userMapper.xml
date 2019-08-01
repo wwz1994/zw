@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bus.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.bus.vo.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+        <result column="salt" property="salt" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="picture" property="picture" jdbcType="VARCHAR" />
+        <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, user_name, password, phone, idcard, salt, email, add_time, update_time, picture,real_name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from tb_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from tb_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.bus.vo.User" >
+        insert into tb_user (id, user_name, password,
+        phone, idcard, salt,
+        email, add_time, update_time,
+        picture,real_name)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{picture,jdbcType=VARCHAR},#{realName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.bus.vo.User" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="idcard != null" >
+                idcard,
+            </if>
+            <if test="salt != null" >
+                salt,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="addTime != null" >
+                add_time,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="picture != null" >
+                picture,
+            </if>
+            <if test="realName != null" >
+                real_name,
+            </if>
+            <if test="openID != null" >
+                open_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="idcard != null" >
+                #{idcard,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null" >
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null" >
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="picture != null" >
+                #{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null" >
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="openID != null" >
+                #{openID,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bus.vo.User" >
+        update tb_user
+        <set >
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="idcard != null" >
+                idcard = #{idcard,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null" >
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null" >
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="picture != null" >
+                picture = #{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null" >
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="openID != null" >
+                open_id = #{openID,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bus.vo.User" >
+        update tb_user
+        set user_name = #{userName,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        idcard = #{idcard,jdbcType=VARCHAR},
+        salt = #{salt,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        picture = #{picture,jdbcType=VARCHAR}
+        real_name = #{realName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="getUser" resultType="map">
+        select tr.role_id roleId, tu.id, tu.user_name, tu.phone, tu.idcard, tu.email,  tu.picture,tu.real_name from tb_user tu left join tb_user_role tr
+        on tu.id = tr.user_id
+        <where>
+             tu.id = #{id}
+        </where>
+    </select>
+    <select id="loginByUser" resultMap="BaseResultMap">
+        select * from tb_user where user_name = #{userName}
+    </select>
+
+    <select id="selectByOpenId" resultMap="BaseResultMap">
+        select * from tb_user where open_id = #{openId}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(0) from tb_user
+        <include refid="where"/>
+    </select>
+    <select id="getPage" resultMap="BaseResultMap">
+        select id, user_name, phone, idcard, email, add_time, update_time, picture,real_name from tb_user
+       <include refid="where"/>
+    </select>
+    <sql id="where">
+        <where>
+            <if test="!@com.bus.utils.StringUtils@isEmpty(userName)">
+                user_name = #{userName}
+            </if>
+            <if test="!@com.bus.utils.StringUtils@isEmpty(realName)">
+                and   real_name = #{realName}
+            </if>
+        </where>
+    </sql>
+</mapper>

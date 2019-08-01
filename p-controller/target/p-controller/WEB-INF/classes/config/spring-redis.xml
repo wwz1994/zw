@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+       <!-- redis数据源 -->
+       <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+              <property name="maxIdle" value="${redis.maxIdle}"/>
+              <property name="maxTotal" value="${redis.maxTotal}"/>
+              <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+              <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>
+              <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"/>
+              <property name="softMinEvictableIdleTimeMillis" value="${redis.softMinEvictableIdleTimeMillis}"/>
+              <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+        <!--      <property name="testOnReturn" value="${redis.testOnReturn}"/>
+              <property name="testWhileIdle" value="${redis.testWhileIdle}"/>-->
+       </bean>
+
+       <!-- 将session放入redis -->
+       <bean
+               class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+              <!-- sesson的有效时间是60分钟 -->
+              <property name="maxInactiveIntervalInSeconds" value="3600"/>
+       </bean>
+
+
+       <!-- Spring-redis连接池管理工厂 -->
+       <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+              <!-- IP地址 -->
+              <property name="hostName" value="${redis.host}" />
+              <!-- 端口号 -->
+              <property name="port" value="${redis.port}" />
+              <property name="password" value="${redis.password}"></property>
+              <!-- 超时时间 默认2000-->
+              <property name="timeout" value="${redis.timeout}" />
+              <property name="database" value="${redis.database}"/>
+              <!-- 连接池配置引用 -->
+              <property name="poolConfig" ref="poolConfig" />
+              <!-- usePool：是否使用连接池 -->
+              <property name="usePool" value="${redis.usePool}"/>
+<!--
+              <constructor-arg name="sentinelConfig" ref="redisSentinelConfiguration"></constructor-arg>
+-->
+       </bean>
+
+       <!-- redis template definition -->
+       <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+              <property name="connectionFactory" ref="jedisConnectionFactory" />
+              <property name="keySerializer">
+                     <bean class="com.bus.redis.StringRedisSerializer" />
+              </property>
+              <property name="valueSerializer">
+                     <bean class="com.bus.redis.RedisObjectSerializer" />
+              </property>
+              <property name="hashKeySerializer">
+                     <bean class="com.bus.redis.StringRedisSerializer" />
+              </property>
+              <property name="hashValueSerializer">
+                     <bean class="com.bus.redis.RedisObjectSerializer" />
+              </property>
+              <!--开启事务  -->
+              <property name="enableTransactionSupport" value="false"></property>
+       </bean>
+
+       <bean id="redisSentinelConfiguration"
+             class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+              <property name="master">
+                     <bean class="org.springframework.data.redis.connection.RedisNode">
+                            <property name="name" value="mymaster">
+                            </property>
+                     </bean>
+              </property>
+              <property name="sentinels">
+                     <set>
+                            <bean class="org.springframework.data.redis.connection.RedisNode">
+                                   <constructor-arg name="host" value="47.112.16.249" />
+                                   <constructor-arg name="port" value="26379" />
+                            </bean>
+                            <bean class="org.springframework.data.redis.connection.RedisNode">
+                                   <constructor-arg name="host" value="47.112.16.249" />
+                                   <constructor-arg name="port" value="26380" />
+                            </bean>
+                            <bean class="org.springframework.data.redis.connection.RedisNode ">
+                                   <constructor-arg name="host" value="47.112.16.249" />
+                                   <constructor-arg name="port" value="26382" />
+                            </bean>
+                     </set>
+              </property>
+       </bean>
+       <!--自定义redis工具类,在需要缓存的地方注入此类  -->
+    <!--   <bean id="redisrCacheManager" class="com.bus.redis.RedisCacheManager">
+              <property name="redisTemplate" ref="redisTemplate" />
+              <property name="expire" value="${redis.expire}"/>
+       </bean>-->
+
+       <!--<bean id="redisPoolConfig" class="com.bus.redis.RedisPoolConfig">
+              <property name="maxIdle" value="${redis.maxIdle}"/>
+              <property name="maxTotal" value="${redis.maxTotal}"/>
+              <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+              <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>
+              <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"/>
+              <property name="softMinEvictableIdleTimeMillis" value="${redis.softMinEvictableIdleTimeMillis}"/>
+              <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+              <property name="testOnReturn" value="${redis.testOnReturn}"/>
+              <property name="testWhileIdle" value="${redis.testWhileIdle}"/>
+       </bean>
+       <bean class="com.bus.redis.RedisUtils">
+              <property name="redisPoolConfig" ref="redisPoolConfig"/>
+              <property name="expire" value="${redis.expire}"/>
+              <property name="host" value="${redis.host}"/>
+              <property name="password" value="${redis.password}"/>
+              <property name="port" value="${redis.port}"/>
+              <property name="timeout" value="${redis.timeout}"/>
+
+       </bean>-->
+</beans>

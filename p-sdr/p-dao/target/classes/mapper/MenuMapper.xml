@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bus.dao.MenuDao" >
+  <resultMap id="BaseResultMap" type="com.bus.vo.Menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="meun_name" property="meunName" jdbcType="VARCHAR" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="menu_code" property="menuCode" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="is_parent" property="isParent" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, meun_name, menu_url, menu_icon, add_time, update_time, menu_code,parent_id,is_parent,code,`is_show`
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryMenuListByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_menu
+    where parent_id = #{id,jdbcType=INTEGER} and is_show='-1'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bus.vo.Menu" >
+    insert into tb_menu (id, meun_name, menu_url,
+    menu_icon, add_time, update_time,
+    menu_code, is_parent, parent_id,
+    code, is_show)
+    values (#{id,jdbcType=INTEGER}, #{meunName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR},
+    #{menuIcon,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{menuCode,jdbcType=VARCHAR}, #{isParent,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER},
+    #{code,jdbcType=VARCHAR}, #{isShow,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bus.vo.Menu" >
+    insert into tb_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="meunName != null" >
+        meun_name,
+      </if>
+      <if test="menuUrl != null" >
+        menu_url,
+      </if>
+      <if test="menuIcon != null" >
+        menu_icon,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="menuCode != null" >
+        menu_code,
+      </if>
+      <if test="isParent != null" >
+        is_parent,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="meunName != null" >
+        #{meunName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menuCode != null" >
+        #{menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isParent != null" >
+        #{isParent,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bus.vo.Menu" >
+    update tb_menu
+    <set >
+      <if test="meunName != null" >
+        meun_name = #{meunName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="menuCode != null" >
+        menu_code = #{menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isParent != null" >
+        is_parent = #{isParent,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bus.vo.Menu" >
+    update tb_menu
+    set meun_name = #{meunName,jdbcType=VARCHAR},
+    menu_url = #{menuUrl,jdbcType=VARCHAR},
+    menu_icon = #{menuIcon,jdbcType=VARCHAR},
+    add_time = #{addTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    menu_code = #{menuCode,jdbcType=VARCHAR},
+    is_parent = #{isParent,jdbcType=INTEGER},
+    parent_id = #{parentId,jdbcType=INTEGER},
+    code = #{code,jdbcType=VARCHAR},
+    is_show = #{isShow,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryMenu" resultMap="BaseResultMap">
+    SELECT tu1.* FROM tb_user_role tur,tb_role tr,tb_menu tu1
+    <where>
+      tur.role_id = tr.id and  find_in_set(tu1.id,tr.menu_id)
+      and  tur.user_id = #{userId} and tu1.`is_show` = '-1'
+    </where>
+  </select>
+  <select id="queryMenuByUserId" resultMap="BaseResultMap">
+    SELECT tu1.* FROM tb_user_role tur,tb_role tr,tb_menu tu1
+    <where>
+      tur.role_id = tr.id and  find_in_set(tu1.id,tr.menu_id)
+      and  tur.user_id = #{userId}
+    </where>
+  </select>
+  <select id="queryMenuList" resultMap="BaseResultMap">
+    SELECT tu1.* FROM tb_menu tu1
+  </select>
+
+  <select id="getCount" resultType="int">
+      select count(0)  FROM tb_menu
+      <where>
+        <if test="meunName != null and meunName!=''" >
+           meun_name = #{meunName,jdbcType=VARCHAR}
+        </if>
+      </where>
+  </select>
+  <select id="getPage" resultMap="BaseResultMap">
+      select *  FROM tb_menu
+      <where>
+        <if test="meunName != null and meunName!=''" >
+          meun_name = #{meunName,jdbcType=VARCHAR}
+        </if>
+      </where>
+      limit #{pageNum},#{pageSize}
+  </select>
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bus.dao.ProductDao" >
+  <resultMap id="BaseResultMap" type="com.bus.vo.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="business_type" property="businessType" jdbcType="VARCHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_name, business_type, create_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bus.vo.Product" >
+    insert into tb_product (id, product_name, business_type, 
+      create_user)
+    values (#{id,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{businessType,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bus.vo.Product" >
+    insert into tb_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="businessType != null" >
+        business_type,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bus.vo.Product" >
+    update tb_product
+    <set >
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        business_type = #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bus.vo.Product" >
+    update tb_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      business_type = #{businessType,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="queryProductSku" resultType="map">
+  SELECT
+	product_name,
+	sku_name,
+	price,
+	ps.id sku_id,
+	ps.product_id
+FROM
+	tb_product tp
+	INNER JOIN tb_product_sku ps ON ps.product_id = tp.id
+      where business_type = #{businessType}
+  </select>
+
+  <select id="getCount" resultType="int">
+    select count(0) from  (<include refid="sql"/>)tb
+    <include refid="case"/>
+  </select>
+  <sql id="sql">
+    select product_name productName,sku_name skuName,product_id productId,price,business_type businessType,ps.id skuId from tb_product tp inner join tb_product_sku ps on ps.product_id = tp.id
+  </sql>
+  <select id="getPage" resultType="map">
+     <include refid="sql"/>
+    <include refid="case"/>
+    limit #{pageNum},#{pageSize}
+  </select>
+
+  <sql id="case">
+    <where>
+      <if test="productName!=null and productName!=''">
+        product_name like concat(concat('%',productName),'%')
+      </if>
+      <if test="skuName!=null and skuName!=''">
+        and sku_name like concat(concat('%',skuName),'%')
+      </if>
+    </where>
+  </sql>
+
+</mapper>

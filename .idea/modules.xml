@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/p-common/p-common.iml" filepath="$PROJECT_DIR$/p-common/p-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p-controller/p-controller.iml" filepath="$PROJECT_DIR$/p-controller/p-controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p-sdr/p-dao/p-dao.iml" filepath="$PROJECT_DIR$/p-sdr/p-dao/p-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p-sdr/p-repository/p-repository.iml" filepath="$PROJECT_DIR$/p-sdr/p-repository/p-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p-sdr/p-sdr.iml" filepath="$PROJECT_DIR$/p-sdr/p-sdr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/p-sdr/p-service/p-service.iml" filepath="$PROJECT_DIR$/p-sdr/p-service/p-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/root.iml" filepath="$PROJECT_DIR$/root.iml" />
+    </modules>
+  </component>
+</project>

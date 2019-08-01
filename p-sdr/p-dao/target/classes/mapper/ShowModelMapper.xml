@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bus.dao.ShowModelMapper" >
+  <resultMap id="BaseResultMap" type="com.bus.vo.ShowModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="model_1" property="model1" jdbcType="INTEGER" />
+    <result column="model_2" property="model2" jdbcType="INTEGER" />
+    <result column="model_3" property="model3" jdbcType="INTEGER" />
+    <result column="model_4" property="model4" jdbcType="INTEGER" />
+    <result column="model_5" property="model5" jdbcType="INTEGER" />
+    <result column="model_6" property="model6" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, model_1, model_2, model_3, model_4, model_5, model_6
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_model
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_model
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bus.vo.ShowModel" >
+    insert into tb_model (id, model_1, model_2, 
+      model_3, model_4, model_5, 
+      model_6)
+    values (#{id,jdbcType=INTEGER}, #{model1,jdbcType=INTEGER}, #{model2,jdbcType=INTEGER}, 
+      #{model3,jdbcType=INTEGER}, #{model4,jdbcType=INTEGER}, #{model5,jdbcType=INTEGER}, 
+      #{model6,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bus.vo.ShowModel" >
+    insert into tb_model
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="model1 != null" >
+        model_1,
+      </if>
+      <if test="model2 != null" >
+        model_2,
+      </if>
+      <if test="model3 != null" >
+        model_3,
+      </if>
+      <if test="model4 != null" >
+        model_4,
+      </if>
+      <if test="model5 != null" >
+        model_5,
+      </if>
+      <if test="model6 != null" >
+        model_6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="model1 != null" >
+        #{model1,jdbcType=INTEGER},
+      </if>
+      <if test="model2 != null" >
+        #{model2,jdbcType=INTEGER},
+      </if>
+      <if test="model3 != null" >
+        #{model3,jdbcType=INTEGER},
+      </if>
+      <if test="model4 != null" >
+        #{model4,jdbcType=INTEGER},
+      </if>
+      <if test="model5 != null" >
+        #{model5,jdbcType=INTEGER},
+      </if>
+      <if test="model6 != null" >
+        #{model6,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bus.vo.ShowModel" >
+    update tb_model
+    <set >
+      <if test="model1 != null" >
+        model_1 = #{model1,jdbcType=INTEGER},
+      </if>
+      <if test="model2 != null" >
+        model_2 = #{model2,jdbcType=INTEGER},
+      </if>
+      <if test="model3 != null" >
+        model_3 = #{model3,jdbcType=INTEGER},
+      </if>
+      <if test="model4 != null" >
+        model_4 = #{model4,jdbcType=INTEGER},
+      </if>
+      <if test="model5 != null" >
+        model_5 = #{model5,jdbcType=INTEGER},
+      </if>
+      <if test="model6 != null" >
+        model_6 = #{model6,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bus.vo.ShowModel" >
+    update tb_model
+    set model_1 = #{model1,jdbcType=INTEGER},
+      model_2 = #{model2,jdbcType=INTEGER},
+      model_3 = #{model3,jdbcType=INTEGER},
+      model_4 = #{model4,jdbcType=INTEGER},
+      model_5 = #{model5,jdbcType=INTEGER},
+      model_6 = #{model6,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryModel" resultMap="BaseResultMap">
+    select * from tb_model
+  </select>
+
+  <select id="getPage" resultMap="BaseResultMap">
+    select * from tb_model
+    limit #{pageNum},#{pageSize}
+  </select>
+
+  <select id="getCount" resultType="int">
+    select count(0) from tb_model
+  </select>
+</mapper>
