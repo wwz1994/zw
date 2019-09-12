@@ -582,19 +582,19 @@ html #layuicss-skinlayercss {
 .layui-layer-loading .layui-layer-content {
     width: 60px;
     height: 24px;
-    background: url(loading-0.gif) no-repeat
+    background: url(./loading-0.gif) no-repeat
 }
 
 .layui-layer-loading .layui-layer-loading1 {
     width: 37px;
     height: 37px;
-    background: url(loading-1.gif) no-repeat
+    background: url(./loading-1.gif) no-repeat
 }
 
 .layui-layer-ico16, .layui-layer-loading .layui-layer-loading2 {
     width: 32px;
     height: 32px;
-    background: url(loading-2.gif) no-repeat
+    background: url(./loading-2.gif) no-repeat
 }
 
 .layui-layer-tips {

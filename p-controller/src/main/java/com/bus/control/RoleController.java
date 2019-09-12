@@ -7,17 +7,20 @@ import com.bus.result.BuzCode;
 import com.bus.result.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.bus.vo.Role;
+
+import javax.validation.Valid;
 
 /**
  * Created by wwz on 2018-11-25.
  */
 @Controller
 @RequestMapping("/web-v/role")
-public class RoleController {
+public class RoleController extends BaseController {
 
     @Autowired
     private IRoleService roleService;
@@ -81,7 +84,10 @@ public class RoleController {
      */
     @RequestMapping("/getRole")
     @ResponseBody
-    public JsonResult getRole(Integer id){
+    public JsonResult getRole(@Valid Role role, Integer id, Errors  errors){
+        if(errors.hasErrors()){
+            return JsonResult.Fail(errors.getFieldError().getDefaultMessage());
+        }
         try{
             return JsonResult.OK(roleService.getRole(id));
         }catch (BuzEx ex){

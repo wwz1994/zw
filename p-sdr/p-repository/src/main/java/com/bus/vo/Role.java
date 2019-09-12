@@ -1,10 +1,16 @@
 package com.bus.vo;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class Role implements Serializable{
     private Integer id;
 
+    @NotNull(message="角色名不能为空")
+    @Length(max = 20)
     private String roleName;
 
     private String menuId;

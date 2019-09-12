@@ -4,10 +4,12 @@ $(function(){
         if(!url){
            return;
         }
+        L$.layerLoad();
         $.ajax({
             url:url,
             success:function(data){
                 $("body").html(data)
+                L$.layerCloseLoad();
             }
         })
         //window.location.href = url

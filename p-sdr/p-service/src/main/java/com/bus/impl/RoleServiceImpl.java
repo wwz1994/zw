@@ -9,6 +9,7 @@ import com.bus.result.BuzCode;
 import com.bus.result.PageInfo;
 import com.bus.userInfo.ShiroPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.bus.vo.Menu;
 import com.bus.vo.Role;
@@ -84,6 +85,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
+    @Cacheable(value="role:list",key="caches[0].name")
     public List<Role> getRoleAll() {
         return roleDao.getRoleAll();
     }
