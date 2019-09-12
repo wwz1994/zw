@@ -37,10 +37,32 @@
                      </list>
               </property>
        </bean>
+       <bean id="validator"
+             class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+              <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+              <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+       </bean>
+<!--
+       <bean id="conversionService" class="org.springframework.samples.petclinic.util.PetclinicConversionServiceFactory" />
+-->
+
        <!--添加操作器适配器-->
        <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
               <property name="cacheSeconds" value="0"/>
               <property name="messageConverters" ref="messageConverters"/>
+              <property name="webBindingInitializer">
+                     <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                            <property name="validator" ref="validator" />
+                     </bean>
+              </property>
+              <!--<property name="customArgumentResolvers">
+                     <list>
+                            <bean class="org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor">
+                                   <constructor-arg value="true"></constructor-arg>
+                            </bean>
+
+                     </list>
+              </property>-->
        </bean>
        <!--消息转换器定义-->
        <util:list id="messageConverters">
@@ -117,11 +139,7 @@
 
        <import resource="spring-profiles.xml"/>
 
-       <bean id="validator"
-             class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-              <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
-              <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
-       </bean>
+
        <!-- 开启shiro的注解支持 -->
        <bean id="defaultAdvisorAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
               <!-- 必须改为true，即使用cglib方式为Action创建代理对象。默认值为false，使用JDK创建代理对象，会造成问题 -->

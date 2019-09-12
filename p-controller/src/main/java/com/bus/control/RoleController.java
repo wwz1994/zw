@@ -5,8 +5,10 @@ import com.bus.IRoleService;
 import com.bus.buzException.BuzEx;
 import com.bus.result.BuzCode;
 import com.bus.result.JsonResult;
+import org.apache.bval.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,7 +86,7 @@ public class RoleController extends BaseController {
      */
     @RequestMapping("/getRole")
     @ResponseBody
-    public JsonResult getRole(@Valid Role role, Integer id, Errors  errors){
+    public JsonResult getRole(@Valid Role role, Errors errors, Integer id){
         if(errors.hasErrors()){
             return JsonResult.Fail(errors.getFieldError().getDefaultMessage());
         }

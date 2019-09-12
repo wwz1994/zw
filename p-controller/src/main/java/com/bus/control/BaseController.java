@@ -5,7 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import javax.validation.Validator;
+import org.springframework.validation.Validator;
+
+import java.beans.PropertyEditorSupport;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author wwz
@@ -14,10 +18,12 @@ import javax.validation.Validator;
  */
 public abstract class BaseController {
     @Autowired
-    protected org.springframework.validation.Validator validator;
-    @InitBinder
+    protected Validator validator;
+
+   /* @InitBinder
     public void initBinder(WebDataBinder webDataBinder){
         webDataBinder.addValidators(validator);
+        webDataBinder.registerCustomEditor(Date.class,new PropertyEditorSupport(new SimpleDateFormat("yyyy-MM-dd")));
     }
-
+*/
 }
