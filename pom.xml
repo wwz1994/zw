@@ -54,7 +54,7 @@
         <aopalliance.version>1.0</aopalliance.version>
         <aspectjweaver.version>1.8.5</aspectjweaver.version>
 
-        <quartz.version>2.3.0</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
 
         <!-- mysql 6.0.6-->
         <mysql.connector.java.version>5.1.42</mysql.connector.java.version>
