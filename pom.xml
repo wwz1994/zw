@@ -57,7 +57,7 @@
         <quartz.version>2.3.0</quartz.version>
 
         <!-- mysql 6.0.6-->
-        <mysql.connector.java.version>5.1.42</mysql.connector.java.version>
+        <mysql.connector.java.version>8.0.16</mysql.connector.java.version>
         <!-- 图片缩放 -->
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <!-- alias fastjson -->
