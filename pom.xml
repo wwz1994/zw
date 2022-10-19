@@ -62,7 +62,7 @@
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <!-- alias fastjson -->
         <fastjson.version>1.2.5</fastjson.version>
-        <jackson.version>2.6.3</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
 
         <!-- dom4j -->
         <dom4j.version>1.6.1</dom4j.version>
